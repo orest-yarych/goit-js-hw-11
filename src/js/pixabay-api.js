@@ -11,5 +11,5 @@ export function getImagesByQuery(query) {
       orientation: 'horizontal',
       safesearch: 'true',
     },
-  });
+  }).then(({ data }) => data);
 }

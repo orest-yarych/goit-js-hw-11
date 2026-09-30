@@ -14,11 +14,14 @@ refs.form.addEventListener('submit', onFormSubmit);
 function onFormSubmit(event) {
   event.preventDefault();
   const query = event.currentTarget.elements['search-text'].value.trim();
+  if (!query) {
+    return;
+  }
   clearGallery();
   showLoader();
 
   getImagesByQuery(query)
-    .then(({ data: { hits: images } }) => {
+    .then(({ hits: images }) => {
       if (images.length > 0) {
         createGallery(images);
       } else {
@@ -27,7 +30,7 @@ function onFormSubmit(event) {
         );
       }
     })
-    .catch(error => console.log(error))
+    .catch(error => showError(error))
     .finally(() => hideLoader());
 }
 
